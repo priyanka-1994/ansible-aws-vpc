@@ -114,6 +114,15 @@
           - dest: 0.0.0.0/0
             gateway_id: "{{igw_out.gateway_id}}"
       register: pubRT_out
+    - name: create a new nat Gateway and allocate a EIP
+      ec2_vpc_nat_gateway:
+        state: "{{state}}"
+        subnet_id: "{{PrivSub1Cidr}}" 
+        wait: true
+        region: "{{region}}"
+        if_exist_do_not_create: true
+      register: new_nat_gateway_out
+
 
 
   
