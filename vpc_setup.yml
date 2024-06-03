@@ -123,7 +123,18 @@
         if_exist_do_not_create: true
       register: new_nat_gateway_out
 
-
-
-  
+    - name: Set up Private subnet route table
+      ec2_vpc_route_table:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        tags: 
+          Name: Vprofile-privRT
+        subnets: 
+          - "{{ privsub1_out.subnet.id }}"
+          - "{{ privsub2_out.subnet.id }}"
+          - "{{ privsub3_out.subnet.id }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{new_nat_gateway_out.nat_gateway_id}}"
+      register: priivate-RT_out
   
