@@ -136,5 +136,5 @@
         routes:
           - dest: 0.0.0.0/0
             gateway_id: "{{new_nat_gateway_out.nat_gateway_id}}"
-      register: priivate-RT_out
+      register: private_RT_out
   
