@@ -171,3 +171,45 @@
         content: " vpcid: {{vpcout.vpc.id}} \n pubsub1id: {{pubsub1_out.subnet.id}} \n pubsub2id: {{pubsub2_out.subnet.id}} \n pubsub3id: {{pubsub3_out.subnet.id}} \nprivsub1id: {{privsub1_out.subnet.id}} \nprivsub2id: {{privsub2_out.subnet.id}} \n privsub3id: {{privsub3_out.subnet.id}} \nigwid: {{igw_out.gateway_id}} \n pubRTid: {{pubRT_out.route_table.id}} \nNATWid: {{new_nat_gateway_out.nat_gateway_id}} \nprivRTid: {{private_RT_out.route_table.id}} "
         dest: vars/output_vars
         
+    - name: Create vprofile ec2-key
+      ec2_key:
+        name: "{{region}}"
+      register: key_out
+
+    - name: save private key into bastion-key.pem
+      copy:
+        content: "{{ key_out.key.private_key }}"
+        dest: "./bastion-key.pem"
+        mode: 0600
+      when: key_out.changed
+
+    - name: Create SG for bastion Host
+      ec2_group:
+        name: bastion-host-sg
+        description: Allow port 22 from everywhere and all port within sg
+        region: "{{region}}"
+        vpc_id: "{{vpcout.vpc.id}}"
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: "{{MYIP}}"
+        register: bastionSG_out
+
+    - name: creation bastion host
+      ec2:
+        key_name: vprofile-key
+        region: "{{region}}"
+        instance_type: t2.micro
+        image: "{{bastion_ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags: 
+          Name: "bastion-Host"
+          Project: Vprofile
+        exact_count: 1
+        count_tags:
+          Name: "bastion-Host"
+          Project: Vprofile
+        group_id: "{{bastionSG_out.group_id}}"
+      register: bastionhost_out       
