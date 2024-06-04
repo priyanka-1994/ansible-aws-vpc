@@ -183,7 +183,7 @@
         mode: 0600
       when: key_out.changed
 
-    - Create SG for bastion Host
+    - name: Create SG for bastion Host
       ec2_group:
         name: bastion-host-sg
         description: Allow port 22 from everywhere and all port within sg
@@ -196,7 +196,7 @@
             cidr_ip: "{{MYIP}}"
         register: bastionSG_out
 
-    - name: creation bastion host
+    - creation bastion host
       ec2:
         key_name: vprofile-key
         region: "{{region}}"
