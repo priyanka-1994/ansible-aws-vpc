@@ -209,7 +209,7 @@
           Name: "bastion-Host"
           Project: Vprofile
         exact_count: 1
-        count_tags:
+        count_tag:
           Name: "bastion-Host"
           Project: Vprofile
         group_id: "{{bastionSG_out.group_id}}"
