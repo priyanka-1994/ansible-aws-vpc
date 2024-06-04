@@ -2,7 +2,7 @@
   connection: local
   gather_facts: False
   tasks:
-    - name: Improt vPC variables
+    - name: Importt vPC variables
       include_vars: vars/vpc_setup
 
     - name: Create Vprofile vPC
@@ -197,7 +197,7 @@
             cidr_ip: "{{MYIP}}"
         register: bastionSG_out
 
-    - Creating Bastion Host
+    - name: Creating Bastion Host
       ec2:
         key_name: vprofile-key
         region: "{{region}}"
@@ -213,4 +213,5 @@
           Name: "bastion-Host"
           Project: Vprofile
         group_id: "{{bastionSG_out.group_id}}"
+        vpc_subnet_id: "{{pubsub1id}}"
       register: bastionhost_out       
