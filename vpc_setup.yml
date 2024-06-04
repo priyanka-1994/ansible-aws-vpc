@@ -174,7 +174,8 @@
         
     - name: Create vprofile ec2-key
       ec2_key:
-        name: "{{region}}"
+        name: vprofile-key
+        region: "{{ region }}"
       register: key_out
 
     - name: save private key into bastion-key.pem
