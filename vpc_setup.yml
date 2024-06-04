@@ -172,17 +172,17 @@
         content: " vpcid: {{vpcout.vpc.id}} \n pubsub1id: {{pubsub1_out.subnet.id}} \n pubsub2id: {{pubsub2_out.subnet.id}} \n pubsub3id: {{pubsub3_out.subnet.id}} \nprivsub1id: {{privsub1_out.subnet.id}} \nprivsub2id: {{privsub2_out.subnet.id}} \n privsub3id: {{privsub3_out.subnet.id}} \nigwid: {{igw_out.gateway_id}} \n pubRTid: {{pubRT_out.route_table.id}} \nNATWid: {{new_nat_gateway_out.nat_gateway_id}} \nprivRTid: {{private_RT_out.route_table.id}} "
         dest: vars/output_vars
         
-    # - name: Create vprofile ec2-key
-    #   ec2_key:
-    #     name: "{{region}}"
-    #   register: key_out
+    - name: Create vprofile ec2-key
+      ec2_key:
+        name: "{{region}}"
+      register: key_out
 
-    # - name: save private key into bastion-key.pem
-    #   copy:
-    #     content: "{{ key_out.key.private_key }}"
-    #     dest: "./bastion-key.pem"
-    #     mode: 0600
-    #   when: key_out.changed
+    - name: save private key into bastion-key.pem
+      copy:
+        content: "{{ key_out.key.private_key }}"
+        dest: "./bastion-key.pem"
+        mode: 0600
+      when: key_out.changed
 
     # - name: Create SG for bastion Host
     #   ec2_group:
