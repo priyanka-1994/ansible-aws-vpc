@@ -11,7 +11,7 @@
       include_vars: vars/output_vars
 
     - name: Create vprofile ec2-key
-      ec2_key:
+      amazon.aws.ec2_key:
         name: vprofile-key
         region: "{{ region }}"
       register: key_out
@@ -27,18 +27,18 @@
       ec2_group:
         name: bastion-host-sg
         description: Allow port 22 from everywhere and all port within sg
-        region: "{{ region }}"
-        vpc_id: "{{ vpcid }}"
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
         rules:
           - proto: tcp
             from_port: 22
             to_port: 22
-            cidr_ip: "{{ MYIP }}"
+            cidr_ip: "{{MYIP}}"
       register: bastionSG_out
 
 
     - name: Creating Bastion Host
-      ec2:
+      amazon.aws.ec2_instance:
         key_name: vprofile-key
         region: "{{region}}"
         instance_type: t2.micro
