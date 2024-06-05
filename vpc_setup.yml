@@ -192,7 +192,7 @@
       ec2_group:
         name: bastion-host-sg
         description: Allow port 22 from everywhere and all port within sg
-        ec2_region: "{{ region }}"
+        region: "{{ region }}"
         vpc_id: "{{ vpcid }}"
         rules:
           - proto: tcp
@@ -201,25 +201,31 @@
             cidr_ip: "{{ MYIP }}"
         register: bastionSG_out
 
-    - name: Capture bastion SG ID
-      set_fact:
-        bastionSG_id: "{{ lookup('aws_ec2', 'group-id', 'group-name=bastion-host-sg', 'region=' + region) }}"
+    - name: Retrieve bastion host security group info
+      ec2_group_info:
+        filters:
+          group-name: bastion-host-sg
+        region: "{{ region }}"
+      register: bastionSG_out
 
-    # - name: Creating Bastion Host
-    #   ec2:
-    #     key_name: vprofile-key
-    #     region: "{{region}}"
-    #     instance_type: t2.micro
-    #     image: "{{ bastion_ami }}"
-    #     wait: yes
-    #     wait_timeout: 300
-    #     instance_tags: 
-    #       Name: "bastion-Host"
-    #       Project: Vprofile
-    #     exact_count: 1
-    #     count_tag:
-    #       Name: "bastion-Host"
-    #       Project: Vprofile
-    #     group_id: "{{bastionSG_out.group_id}}"
-    #     vpc_subnet_id: "{{pubsub1id}}"
-    #   register: bastionhost_out       
+    - set_fact:
+        bastionSG_id: "{{ bastionSG_out.security_groups[0].group_id }}"
+
+    - name: Creating Bastion Host
+      ec2:
+        key_name: vprofile-key
+        region: "{{region}}"
+        instance_type: t2.micro
+        image: "{{ bastion_ami }}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags: 
+          Name: "bastion-Host"
+          Project: Vprofile
+        exact_count: 1
+        count_tag:
+          Name: "bastion-Host"
+          Project: Vprofile
+        group_id: "{{bastionSG_out.group_id}}"
+        vpc_subnet_id: "{{pubsub1id}}"
+      register: bastionhost_out       
