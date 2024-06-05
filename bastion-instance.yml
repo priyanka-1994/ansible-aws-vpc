@@ -33,7 +33,7 @@
           - proto: tcp
             from_port: 22
             to_port: 22
-            cidr_ip: "{{MYIP}}"
+            cidr_ip:"{{MYIP}}"
       register: bastionSG_out
 
 
@@ -42,7 +42,7 @@
         key_name: vprofile-key
         region: "{{region}}"
         instance_type: t2.micro
-        image_id: "{{ bastion_ami }}"
+        image_id: "{{bastion_ami}}"
         wait: yes
         wait_timeout: 300
         instance_tags: 
