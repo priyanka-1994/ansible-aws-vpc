@@ -4,8 +4,8 @@
   connection: local
   gather_facts: no
   tasks:
-    - name: import vpc setup variable
-      include_vars: vars/bastion_setup
+    # - name: import vpc setup variable
+    #   include_vars: vars/bastion_setup
     
     - name: Import VPC setup variable
       include_vars: vars/output_vars
