@@ -5,6 +5,9 @@
     - name: Import vPC variables
       include_vars: vars/vpc_setup
 
+    - name: Import Bastion setup variables
+      include_vars: vars/bastion_setup.yml
+
     - name: Create Vprofile vPC
       ec2_vpc_net:
         name: "{{vpc_name}}"
