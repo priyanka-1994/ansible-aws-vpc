@@ -2,10 +2,10 @@
  pubsub1id: subnet-0247ace83f2712850 
  pubsub2id: subnet-0b8b56ef001de0f1e 
  pubsub3id: subnet-0d0e8718deaf03e60 
-privsub1id: subnet-02c418600e04450c6 
-privsub2id: subnet-0c90893e0ae5998ff 
+ privsub1id: subnet-02c418600e04450c6 
+ privsub2id: subnet-0c90893e0ae5998ff 
  privsub3id: subnet-0b733bfe1952b62d9 
-igwid: igw-0a7304edb20dad719 
+ igwid: igw-0a7304edb20dad719 
  pubRTid: rtb-03235477c3fb22f7f 
-NATWid: nat-061d5e4eb1fc07d99 
-privRTid: rtb-0785af43f0ff96b01 
+ NATWid: nat-061d5e4eb1fc07d99 
+ privRTid: rtb-0785af43f0ff96b01 
