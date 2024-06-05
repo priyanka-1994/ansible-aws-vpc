@@ -201,6 +201,10 @@
             cidr_ip: "{{ MYIP }}"
         register: bastionSG_out
 
+      - name: Capture bastion SG ID
+      set_fact:
+        bastionSG_id: "{{ lookup('aws_ec2', 'group-id', 'group-name=bastion-host-sg', 'region=' + region) }}"
+
     # - name: Creating Bastion Host
     #   ec2:
     #     key_name: vprofile-key
