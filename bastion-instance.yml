@@ -45,15 +45,15 @@
         image_id: "{{bastion_ami}}"
         wait: yes
         wait_timeout: 300
-        instance_tags: 
+        tags: 
           Name: "bastion-Host"
           Project: Vprofile
         exact_count: 1
         count_tag:
           Name: "bastion-Host"
           Project: Vprofile
-        group_id: "{{bastionSG_out.group_id}}"
-        vpc_subnet_id: "{{pubsub1id}}"
+        security_group: "{{bastionSG_out.group_id}}"
+        subnet_id: "{{pubsub1id}}"
       register: bastionhost_out       
 
     
