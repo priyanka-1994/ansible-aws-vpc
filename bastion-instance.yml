@@ -38,7 +38,7 @@
 
 
     - name: Creating Bastion Host
-      community.aws.ec2_instance:
+      amazon.aws.ec2_instance:
         key_name: vprofile-key
         region: "{{region}}"
         instance_type: t2.micro
@@ -49,11 +49,9 @@
           Name: "bastion-Host"
           Project: Vprofile
         exact_count: 1
-        count_tag:
-          Name: "bastion-Host"
-          Project: Vprofile
+        # count_tag:
+        #   Name: "bastion-Host"
+        #   Project: Vprofile
         security_group: "{{bastionSG_out.group_id}}"
         subnet_id: "{{pubsub1id}}"
-      register: bastionhost_out       
-
-    
+      register: bastionhost_out   
