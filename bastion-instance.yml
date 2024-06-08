@@ -48,8 +48,8 @@
         tags: 
           Name: "bastion-Host"
           Project: Vprofile
-        exact_count: 1
-        count:
+        count: 1
+        count_tag:
           Name: "bastion-Host"
           Project: Vprofile
         security_group: "{{bastionSG_out.group_id}}"
