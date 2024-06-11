@@ -70,17 +70,17 @@
       amazon.aws.ec2_instance:
 
         key_name: vprokey
-        region: "{{region}}"
+        region: "{{ region }}"
         instance_type: t2.micro
-        image: "{{nginx_ami}}"
+        image: "{{ nginx_ami }}"
         wait: yes
         wait_timeout: 300
         instance_tags: 
           Name: "web01"
           Project: vprofilepproject
         exact_count: 1
-        group_id: "{{vprostacksg_out.group_id}}"
-        vpc_subnet_id: "{{privsub1id}}"
+        group_id: "{{ vprostacksg_out.group_id }}"
+        vpc_subnet_id: "{{ privsub1id }}"
       register: web01_out
 
     - name: Creating Tomcat app01
