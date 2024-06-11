@@ -52,7 +52,7 @@
           - proto: tcp
             from_port: 22
             to_port: 22
-            group_id: "{{BationSGid}}"
+            group_id: "{{BastionSGid}}"
       register: vprostacksg_out
 
     - name: Update sg with its own sg id
