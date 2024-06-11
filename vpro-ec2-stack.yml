@@ -67,7 +67,7 @@
             group_id: "{{vprostacksg_out.group_id}}"
     
     - name: Creating Nginx web01
-      ec2:
+      amazon.aws.ec2_instance:
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
@@ -83,7 +83,7 @@
       register: web01_out
 
     - name: Creating Tomcat app01
-      amazon.aws.ec2:
+      amazon.aws.ec2_instance:
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
@@ -99,7 +99,7 @@
       register: app01_out
     
     - name: Creating Memcache mc01
-      amazon.aws.ec2:
+      amazon.aws.ec2_instance:
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
@@ -115,7 +115,7 @@
       register: mc01_out
 
     - name: Creating Rabbitmq rmq01
-      amazon.aws.ec2:
+      amazon.aws.ec2_instance:
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
@@ -131,7 +131,7 @@
       register: rmq01_out
 
     - name: Creating Mysql db01
-      amazon.aws.ec2:
+      amazon.aws.ec2_instance:
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
