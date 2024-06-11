@@ -67,7 +67,7 @@
             group_id: "{{vprostacksg_out.group_id}}"
     
     - name: Creating Nginx web01
-      amazon.aws.ec2_instance:
+      ec2:
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
@@ -83,7 +83,7 @@
       register: web01_out
 
     - name: Creating Tomcat app01
-      amazon.aws.ec2_instance:
+      ec2:
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
