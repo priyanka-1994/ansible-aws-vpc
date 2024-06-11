@@ -67,7 +67,8 @@
             group_id: "{{vprostacksg_out.group_id}}"
     
     - name: Creating Nginx web01
-      ec2:
+      amazon.aws.ec2_instance:
+
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
