@@ -1,3 +1,5 @@
+region: us-east-2
+
 nginx_ami: ami-02371361af091464a
 
 tomcat_ami: ami-02371361af091464a
