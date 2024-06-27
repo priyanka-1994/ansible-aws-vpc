@@ -167,7 +167,7 @@
             load_balancer_port: 80
             instance_port: 80
     - name: Insert/update Hosts IP & Name in file provision-stack/group_vars/hostip
-      blockfile: 
+      blockinfile: 
         path: provision-stack/group_vars/hostip
         block: |
           web01_ip: {{ web01_out.tagged_instances[0].private_ip }} 
@@ -221,7 +221,7 @@
           [stack_inst:vars]
           ansible_user=ubuntu
           ansible_ssh_private_key_file=loginkey_vpro.pem
-          
+
 
 
 
