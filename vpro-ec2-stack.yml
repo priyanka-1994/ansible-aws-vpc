@@ -67,7 +67,7 @@
             group_id: "{{ vprostacksg_out.group_id }}"
     
     - name: Creating Nginx web01
-      amazon.aws.ec2_instance:
+      ec2:
 
         key_name: vprokey
         region: "{{ region }}"
@@ -79,12 +79,16 @@
           Name: "web01"
           Project: vprofilepproject
         exact_count: 1
-        vpc_security_group_ids: ["{{ vprostacksg_out.group_id }}"]  # Attach the security group here
+        count_tag:
+          Name: "web01"
+          Project: Vprofile
+          Owner: DevOps Team 
+        group_id: "{{ vprostacksg_out.group_id }}"  # Attach the security group here
         vpc_subnet_id: "{{ privsub1id }}"
       register: web01_out
 
     - name: Creating Tomcat app01
-      amazon.aws.ec2_instance:
+      ec2:
 
         key_name: vprokey
         region: "{{region}}"
@@ -101,7 +105,7 @@
       register: app01_out
     
     - name: Creating Memcache mc01
-      amazon.aws.ec2_instance:
+      ec2:
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
@@ -117,7 +121,7 @@
       register: mc01_out
 
     - name: Creating Rabbitmq rmq01
-      amazon.aws.ec2_instance:
+      ec2:
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
@@ -133,7 +137,7 @@
       register: rmq01_out
 
     - name: Creating Mysql db01
-      amazon.aws.ec2_instance:
+      ec2:
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
