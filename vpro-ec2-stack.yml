@@ -147,7 +147,7 @@
       register: db01_out
 
     - debug:
-        var: db01_out.tagged_instances[0].id
+        var: db01_out.instances[0].id
   
     - name: create ELB
         amazon.aws.elb:
