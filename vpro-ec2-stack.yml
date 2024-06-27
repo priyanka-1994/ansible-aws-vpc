@@ -150,13 +150,13 @@
         var: db01_out.instances[0].id
   
     - name: create ELB
-        amazon.aws.elb:
+      amazon.aws.elb:
         name: "vporfile-elb"
         region: "{{ region }}"
         state: present
-        instance_ids:
+        instances:
           - "{{ web01_out.instances[0].id }}"
-        purge_instance_id: true
+        purge_instance_ids: true
         security_group_ids: "{{ vproELB_out.group_id }}"
         subnets:
           - "{{ pubsub1id }}"
