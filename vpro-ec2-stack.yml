@@ -76,14 +76,14 @@
         wait_timeout: 300
         tags: 
           Name: "web01"
-          Project: Vprofile
+          Project: Vprofileproject
         exact_count: 1
         security_groups: "{{ vprostacksg_out.group_id }}"  # Attach the security group here
         vpc_subnet_id: "{{ privsub1id }}"
       register: web01_out
 
     - name: Creating Tomcat app01
-      ec2:
+      amazon.aws.ec2_instance:
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
@@ -94,12 +94,12 @@
           Name: "app01"
           Project: vprofilepproject
         exact_count: 1
-        vpc_security_group_ids: ["{{ vprostacksg_out.group_id }}"]  
+        security_groups: "{{ vprostacksg_out.group_id }}"  # Attach the security group here
         vpc_subnet_id: "{{privsub1id}}"
       register: app01_out
     
     - name: Creating Memcache mc01
-      ec2:
+      amazon.aws.ec2_instance:
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
@@ -110,12 +110,12 @@
           Name: "mc01"
           Project: vprofilepproject
         exact_count: 1
-        vpc_security_group_ids: ["{{ vprostacksg_out.group_id }}"]  # Attach the security group here
+        security_groups: "{{ vprostacksg_out.group_id }}"  # Attach the security group here
         vpc_subnet_id: "{{privsub1id}}"
       register: mc01_out
 
     - name: Creating Rabbitmq rmq01
-      ec2:
+      amazon.aws.ec2_instance:
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
@@ -126,12 +126,12 @@
           Name: "rmq01"
           Project: vprofilepproject
         exact_count: 1
-        vpc_security_group_ids: ["{{ vprostacksg_out.group_id }}"]  # Attach the security group here
+        security_groups: "{{ vprostacksg_out.group_id }}"  # Attach the security group here
         vpc_subnet_id: "{{privsub1id}}"
       register: rmq01_out
 
     - name: Creating Mysql db01
-      ec2:
+      amazon.aws.ec2_instance:
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
@@ -142,7 +142,7 @@
           Name: "db01"
           Project: vprofilepproject
         exact_count: 1
-        vpc_security_group_ids: ["{{ vprostacksg_out.group_id }}"]  # Attach the security group here
+        security_groups: "{{ vprostacksg_out.group_id }}"  # Attach the security group here
         vpc_subnet_id: "{{privsub1id}}"
       register: db01_out
 
