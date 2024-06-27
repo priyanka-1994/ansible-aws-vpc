@@ -166,7 +166,7 @@
           - protocol: http
             load_balancer_port: 80
             instance_port: 80
-    - name: Insert/update Hosts IP & Name in file provision-stack/group_vars/hostip
+    - name: Insert/update Hosts IP & Name in file provision-stack/group_vars/hostip #changing
       blockinfile: 
         path: provision-stack/group_vars/hostip
         block: |
