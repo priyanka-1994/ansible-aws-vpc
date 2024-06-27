@@ -149,7 +149,7 @@
     - name: Debug instance ID
       debug:
         var: db01_out.tagged_instances[0].id
-      when: db01_out.tagged_instances is defined
+      when: db01_out.tagged_instances is not defined
 
 
   
