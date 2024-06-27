@@ -147,80 +147,80 @@
       register: db01_out
 
     - debug:
-        var: db01_out.instances[0].id
+        var: db01_out.tagged_instances[0].id
   
-    - name: create ELB
-      amazon.aws.elb:
-        name: "vporfile-elb"
-        region: "{{ region }}"
-        state: present
-        instances:
-          - "{{ web01_out.instances[0].id }}"
-        purge_instance_ids: true
-        security_group_ids: "{{ vproELB_out.group_id }}"
-        subnets:
-          - "{{ pubsub1id }}"
-          - "{{ pubsub2id }}"
-          - "{{ pubsub3id }}"
-        listeners:
-          - protocol: http
-            load_balancer_port: 80
-            instance_port: 80
-    - name: Insert/update Hosts IP & Name in file provision-stack/group_vars/hostip #changing
-      blockinfile: 
-        path: provision-stack/group_vars/hostip
-        block: |
-          web01_ip: {{ web01_out.tagged_instances[0].private_ip }} 
-          app01_ip: {{ app01_out.tagged_instances[0].private_ip }} 
-          rmq01_ip: {{ rmq01_out.tagged_instances[0].private_ip }} 
-          mc01_ip: {{ mc01_out.tagged_instances[0].private_ip }} 
-          db01_ip: {{ db01_out.tagged_instances[0].private_ip }} 
+    # - name: create ELB
+    #   amazon.aws.elb:
+    #     name: "vporfile-elb"
+    #     region: "{{ region }}"
+    #     state: present
+    #     instances:
+    #       - "{{ web01_out.instances[0].id }}"
+    #     purge_instance_ids: true
+    #     security_group_ids: "{{ vproELB_out.group_id }}"
+    #     subnets:
+    #       - "{{ pubsub1id }}"
+    #       - "{{ pubsub2id }}"
+    #       - "{{ pubsub3id }}"
+    #     listeners:
+    #       - protocol: http
+    #         load_balancer_port: 80
+    #         instance_port: 80
+    # - name: Insert/update Hosts IP & Name in file provision-stack/group_vars/hostip #changing
+    #   blockinfile: 
+    #     path: provision-stack/group_vars/hostip
+    #     block: |
+    #       web01_ip: {{ web01_out.tagged_instances[0].private_ip }} 
+    #       app01_ip: {{ app01_out.tagged_instances[0].private_ip }} 
+    #       rmq01_ip: {{ rmq01_out.tagged_instances[0].private_ip }} 
+    #       mc01_ip: {{ mc01_out.tagged_instances[0].private_ip }} 
+    #       db01_ip: {{ db01_out.tagged_instances[0].private_ip }} 
 
-    - name: Copy login key to provision_stack directory
-      copy:
-        src: loginkey_vpro.pem
-        dest: provision-stack/loginkey_vpro.pem
-        mode: '0400'
+    # - name: Copy login key to provision_stack directory
+    #   copy:
+    #     src: loginkey_vpro.pem
+    #     dest: provision-stack/loginkey_vpro.pem
+    #     mode: '0400'
     
-    - name: Insert/Update Inventory file provison-stack/inventory-vpro
-      blockinfile:
-        path: provision-stack/inventory-vpro
-        block: |
-          web01 ansible_host={{ web01_out.tagged_instances[0].private_ip }}
-          app01 ansible_host={{ app01_out.tagged_instances[0].private_ip }}
-          rmq01 ansible_host={{ rmq01_out.tagged_instances[0].private_ip }}
-          mc01 ansible_host={{ mc01_out.tagged_instances[0].private_ip }}
-          db01 ansible_host={{ db01_out.tagged_instances[0].private_ip }}
-          cntl ansible_host=127.0.0.0 ansible_connection=local
+    # - name: Insert/Update Inventory file provison-stack/inventory-vpro
+    #   blockinfile:
+    #     path: provision-stack/inventory-vpro
+    #     block: |
+    #       web01 ansible_host={{ web01_out.tagged_instances[0].private_ip }}
+    #       app01 ansible_host={{ app01_out.tagged_instances[0].private_ip }}
+    #       rmq01 ansible_host={{ rmq01_out.tagged_instances[0].private_ip }}
+    #       mc01 ansible_host={{ mc01_out.tagged_instances[0].private_ip }}
+    #       db01 ansible_host={{ db01_out.tagged_instances[0].private_ip }}
+    #       cntl ansible_host=127.0.0.0 ansible_connection=local
 
-          [websrvgrp]
-          web01
+    #       [websrvgrp]
+    #       web01
 
-          [appsrvgrp]
-          app01
+    #       [appsrvgrp]
+    #       app01
 
-          [rmqsrvgrp]
-          rmq01
+    #       [rmqsrvgrp]
+    #       rmq01
 
-          [mcsrvgrp]
-          mc
+    #       [mcsrvgrp]
+    #       mc
 
-          [dbsrvgrp]
-          db01
+    #       [dbsrvgrp]
+    #       db01
 
-          [control]
-          cntl
+    #       [control]
+    #       cntl
        
-          [stack_inst:children]
-          websrvgrp
-          appsrvgrp
-          rmqsrvgrp
-          mcsrvgrp
-          dbsrvgrp
+    #       [stack_inst:children]
+    #       websrvgrp
+    #       appsrvgrp
+    #       rmqsrvgrp
+    #       mcsrvgrp
+    #       dbsrvgrp
 
-          [stack_inst:vars]
-          ansible_user=ubuntu
-          ansible_ssh_private_key_file=loginkey_vpro.pem
+    #       [stack_inst:vars]
+    #       ansible_user=ubuntu
+    #       ansible_ssh_private_key_file=loginkey_vpro.pem
 
 
 
