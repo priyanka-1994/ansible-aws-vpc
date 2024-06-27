@@ -68,7 +68,6 @@
     
     - name: Creating Nginx web01
       ec2:
-
         key_name: vprokey
         region: "{{ region }}"
         instance_type: t2.micro
@@ -89,7 +88,6 @@
 
     - name: Creating Tomcat app01
       ec2:
-
         key_name: vprokey
         region: "{{region}}"
         instance_type: t2.micro
