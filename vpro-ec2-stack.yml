@@ -56,7 +56,7 @@
       register: vprostacksg_out
 
     - name: Update sg with its own sg id
-      ec2_group:
+      amazon.aws.ec2_security_group:
         name: vprostack-sg
         description: Allow port 22 from everywhere
         region: "{{ region }}"
@@ -127,15 +127,15 @@
           Project: vprofilepproject
         exact_count: 1
         security_groups: "{{ vprostacksg_out.group_id }}"  # Attach the security group here
-        vpc_subnet_id: "{{privsub1id}}"
+        vpc_subnet_id: "{{ privsub1id }}"
       register: rmq01_out
 
     - name: Creating Mysql db01
       amazon.aws.ec2_instance:
         key_name: vprokey
-        region: "{{region}}"
+        region: "{{ region }}"
         instance_type: t2.micro
-        image_id: "{{mysql_ami}}"
+        image_id: "{{ mysql_ami }}"
         wait: yes
         wait_timeout: 300
         tags: 
@@ -143,7 +143,7 @@
           Project: vprofilepproject
         exact_count: 1
         security_groups: "{{ vprostacksg_out.group_id }}"  # Attach the security group here
-        vpc_subnet_id: "{{privsub1id}}"
+        vpc_subnet_id: "{{ privsub1id }}"
       register: db01_out
     
     - name: Debug instance ID
