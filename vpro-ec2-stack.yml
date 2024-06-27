@@ -145,9 +145,13 @@
         security_groups: "{{ vprostacksg_out.group_id }}"  # Attach the security group here
         vpc_subnet_id: "{{privsub1id}}"
       register: db01_out
-
-    - debug:
+    
+    - name: Debug instance ID
+      debug:
         var: db01_out.tagged_instances[0].id
+      when: db01_out.tagged_instances is defined
+
+
   
     # - name: create ELB
     #   amazon.aws.elb:
