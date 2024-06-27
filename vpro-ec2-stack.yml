@@ -67,22 +67,18 @@
             group_id: "{{ vprostacksg_out.group_id }}"
     
     - name: Creating Nginx web01
-      ec2:
+      amazon.aws.ec2_instance:
         key_name: vprokey
         region: "{{ region }}"
         instance_type: t2.micro
         image_id: "{{ nginx_ami }}"
         wait: yes
         wait_timeout: 300
-        instance_tags: 
+        tags: 
           Name: "web01"
           Project: Vprofile
         exact_count: 1
-        count_tag:
-          Name: "web01"
-          Project: Vprofile
-          Owner: DevOps Team 
-        group_id: "{{ vprostacksg_out.group_id }}"  # Attach the security group here
+        security_groups: "{{ vprostacksg_out.group_id }}"  # Attach the security group here
         vpc_subnet_id: "{{ privsub1id }}"
       register: web01_out
 
