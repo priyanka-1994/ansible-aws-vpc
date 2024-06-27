@@ -149,13 +149,13 @@
     - debug:
         var: db01_out.tagged_instances[0].id
   
-    - local_action:
-        module: ec2_elb_lb
+    - name: create ELB
+        amazon.aws.elb:
         name: "vporfile-elb"
         region: "{{ region }}"
         state: present
         instance_ids:
-          - "{{ web01_out.tagged_instances[0].id }}"
+          - "{{ web01_out.instances[0].id }}"
         purge_instance_id: true
         security_group_ids: "{{ vproELB_out.group_id }}"
         subnets:
